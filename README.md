@@ -4,4 +4,4 @@ The [Bitcoin protocol](https://en.bitcoin.it/wiki/Protocol_documentation) implem
 
 ## License
 
-Available here: [link:COPYING]
+Available here: [COPYING](COPYING.txt)
