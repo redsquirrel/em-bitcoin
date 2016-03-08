@@ -38,13 +38,11 @@ module EventMachine::Bitcoin
 
     def on_block(block)
       p ['block', block.hash]
-      #p block.payload.each_byte.map{|i| "%02x" % [i] }.join(" ")
-      #puts block.to_json
     end
 
     def on_version(version)
       p [@sockaddr, 'version', version, version.time - Time.now.to_i]
-      send_data( Bitcoin::Protocol.verack_pkt )
+      send_data(Bitcoin::Protocol.verack_pkt)
     end
 
     def on_verack
@@ -79,9 +77,8 @@ module EventMachine::Bitcoin
   class Connection < EM::Connection
     include ConnectionHandler
 
-    def initialize(host, port, connections)
+    def initialize(host, port)
       @sockaddr = [host, port]
-      @connections = connections
       @parser = Bitcoin::Protocol::Parser.new( self )
     end
 
@@ -96,29 +93,21 @@ module EventMachine::Bitcoin
 
     def unbind
       p ['disconnected', @sockaddr]
-      self.class.connect_random_from_dns(@connections)
+      self.class.connect_random_from_dns
     end
 
-    def self.connect(host, port, connections)
-      EM.connect(host, port, self, host, port, connections)
+    def self.connect(host, port)
+      EM.connect(host, port, self, host, port)
     end
 
-    def self.connect_random_from_dns(connections)
+    def self.connect_random_from_dns
       seeds = Bitcoin.network[:dns_seeds]
       if seeds.any?
         host = Resolv::DNS.new.getaddresses(seeds.sample).map {|a| a.to_s}.sample
-        connect(host, Bitcoin::network[:default_port], connections)
+        connect(host, Bitcoin::network[:default_port])
       else
         raise "No DNS seeds available. Provide IP, configure seeds, or use different network."
       end
     end
-  end
-end
-
-if $0 == __FILE__
-  EM.run do
-    connections = []
-    #Bitcoin::Connection.connect('127.0.0.1', 8333, connections)
-    EM::Bitcoin::Connection.connect_random_from_dns(connections)
   end
 end
