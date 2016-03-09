@@ -18,7 +18,7 @@ Remember that you always need to start the EventMachine event loop. You can't ju
 EventMachine::Bitcoin::Connection.connect_random_from_dns
 ```
 
-You'll need to do this:
+You'll need to do this, which will actually connect to the Bitcoin network and you'll see a stream of transactions.
 
 ```ruby
 EventMachine.run do
@@ -50,8 +50,9 @@ EM.run { TxCounter.connect_random_from_dns }
 
 ## TODO
 
-* Put lisence in gemspec
-* Rework the integration points to both EM and the Bitcoin parser
+* Rework the integration points to both EM and the Bitcoin protocol parser
+* Warn about some of the DNS seeds being flaky
+* Put license in gemspec
 * Write some tests
 * Write some examples
 
