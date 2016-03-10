@@ -47,7 +47,7 @@ class TransactionFactory
   end
 end
 
-EM::Bitcoin::Connection.user_agent = "redsquirrel.com/btc"
+# EM::Bitcoin::Connection.user_agent = "redsquirrel.com/btc"
 
 # tx = TransactionFactory.create_tx
 tx = "fakeTX"
@@ -61,6 +61,7 @@ class TransactionPusher < EM::Bitcoin::Connection
 
   def send_tx
     puts "Sending transaction to #{self.address}!"
+    p tx
     # send_data(Bitcoin::Protocol.pkt("tx", self.tx.payload))
     close_connection
   end
@@ -68,5 +69,5 @@ end
 
 EM.run do
   # show against testnet
-  EM::Bitcoin::Connection.connect(TransactionPusher)
+  EM::Bitcoin::Connection.connect(TransactionPusher, tx: tx)
 end
