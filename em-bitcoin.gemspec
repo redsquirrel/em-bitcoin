@@ -3,6 +3,7 @@ $:.push File.expand_path("../lib", __FILE__)
 Gem::Specification.new do |s|
   s.name        = "em-bitcoin"
   s.version     = "0.01"
+  s.license     = ["MIT"]
   s.authors     = ["redsquirrel"]
   s.email       = ["dave.hoover@gmail.com"]
   s.summary     = %q{Bitcoin Protocol using EventMachine}
