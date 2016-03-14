@@ -52,7 +52,6 @@ EM.run { TxCounter.connect_random_from_dns }
 
 * Rework the integration points to both EM and the Bitcoin protocol parser
 * Warn about some of the DNS seeds being flaky
-* Put license in gemspec
 * Write some tests
 * Write some examples
 
